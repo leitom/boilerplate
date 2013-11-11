@@ -1,0 +1,24 @@
+{
+    "name": "leitom/boilerplate",
+    "description": "Codebase that contains all basic stuff when creating a new project in the laravel 4 framework",
+    "authors": [
+        {
+            "name": "Tommy Leirvik",
+            "email": "leirvik.tommy@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "4.0.*"
+    },
+    "autoload": {
+        "classmap": [
+	    "src/controllers",
+	    "src/migrations"
+        ],
+        "psr-0": {
+            "Leitom\\Boilerplate\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
