@@ -28,14 +28,16 @@ class SessionsTest extends TestCase {
 		Auth::shouldReceive('attempt')->once()->andReturn(false);
 		$this->call('POST', 'app/sessions');
 
-		$this->assertRedirectedTo('app/sessions/create');
+		$this->assertSessionHas('loginError');
+
+		$this->assertRedirectedTo('app/login');
 	}
 
 	public function testDestroy()
 	{
 		Auth::shouldReceive('logout')->once()->andReturn(true);
 
-		$this->call('POST', 'app/sessions', array('method' => 'DELETE'));
+		$this->call('DELETE', 'app/sessions/1');
 
 		$this->assertRedirectedTo('app/login');
 	}

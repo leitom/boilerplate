@@ -3,9 +3,9 @@
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Validation\Validator as Validator;
 use Illuminate\Support\MessageBag;
-use Leitom\Boilerplate\Extensions\ValidatorInterface;
+use \Leitom\Boilerplate\Extensions\ValidatorInterface;
 
-abstract class BoilerplateModel extends Eloquent implements ValidatorInterface {
+abstract class Model extends Eloquent implements ValidatorInterface {
 	
 	/**
      * Validator instance
