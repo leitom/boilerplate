@@ -44,7 +44,7 @@ class SessionsController extends \BaseController {
 			'password' => Input::get('password'),
 			'active'   => 1
 		);
-
+		
 		if (Auth::attempt($credentials, Input::get('remember'))) return Redirect::intended('app/dashboard');
 
 		return Redirect::route('app.sessions.create')->withInput()->with('loginError', trans('sessions.wrong_username_or_password'));
