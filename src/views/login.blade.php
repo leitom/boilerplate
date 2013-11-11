@@ -10,7 +10,14 @@
             @if (Session::has('loginError'))
             <div class="clear-fix">&nbsp;</div>
             <div class="alert alert-danger">
-              <span class="glyphicon glyphicon-warning-sign"></span> <strong>{{ Session::get('loginError') }}</strong>
+              <span class="glyphicon glyphicon-warning-sign"></span> {{ Session::get('loginError') }}
+            </div>
+            @endif
+
+            @if (Session::has('logoutMessage'))
+            <div class="clear-fix">&nbsp;</div>
+            <div class="alert alert-info">
+              <span class="glyphicon glyphicon-info-sign"></span> {{ Session::get('logoutMessage') }}
             </div>
             @endif
 

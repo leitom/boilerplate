@@ -39,6 +39,8 @@ class SessionsTest extends TestCase {
 
 		$this->call('DELETE', 'app/sessions/1');
 
+		$this->assertSessionHas('logoutMessage');
+
 		$this->assertRedirectedTo('app/login');
 	}
 

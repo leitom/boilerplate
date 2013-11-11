@@ -2,7 +2,7 @@
 
 use View, Auth, Input, Redirect, MessageBag;
 
-class SessionsController extends \BaseController {
+class SessionsController extends BaseController {
 
 	/**
 	 * Master layout for all the subviews
@@ -59,7 +59,7 @@ class SessionsController extends \BaseController {
 	{
 		Auth::logout();
 
-		return Redirect::to('app/login');
+		return Redirect::to('app/login')->with('logoutMessage', trans('sessions.logged_out'));
 	}
 
 }

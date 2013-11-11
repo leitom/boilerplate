@@ -19,7 +19,7 @@ class BoilerplateServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		// Init the package
-		$this->package('leitom/boilerplate', 'leitom.boilerplate');
+		$this->package('leitom/boilerplate');
 
 		// Require
 		require __DIR__.'/../../../filters.php';

@@ -4,14 +4,14 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Application Debug Mode
+	| Application base prefix
 	|--------------------------------------------------------------------------
 	|
-	| When your application is in debug mode, detailed error messages with
-	| stack traces will be shown on every error that occurs within your
-	| application. If disabled, a simple generic error page is shown.
+	| The default base prefix of the boilerplate are << app >>
+	| This can be changed here
 	|
 	*/
 
+	'basePrefix' => 'app'
 
 );

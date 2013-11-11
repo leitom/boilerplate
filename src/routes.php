@@ -11,6 +11,11 @@
 |
 */
 
+Route::get('test', function()
+{
+	dd(Config::get('leitom.boilerplate::basePrefix'));
+});
+
 // All routes in the Leitom\Boilerplate are default prefixed with << app >>
 Route::group(array('prefix' => 'app'), function()
 {
