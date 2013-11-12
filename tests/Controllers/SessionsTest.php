@@ -5,11 +5,17 @@ class SessionsTest extends TestCase {
 	public function setUp()
 	{
 		parent::setUp();
+
+		$this->prefix = Config::get('leitom.boilerplate::prefix');
+
+		$this->defaultAppPage = Config::get('leitom.boilerplate::defaultAppPage');
+
+		if( ! empty($this->prefix)) $this->prefix .= '/';
 	}
 
 	public function testCreate()
 	{
-		$this->call('GET', 'app/login');
+		$this->call('GET', $this->prefix.'login');
 
 		$this->assertResponseOk();
 
@@ -20,31 +26,34 @@ class SessionsTest extends TestCase {
 	{
 		Auth::shouldReceive('attempt')->once()->andReturn(true);
 
-		$this->call('POST', Config::get('leitom.boilerplate::prefix').'/sessions', array('username' => 'leirvik.tommy@gmail.com', 'password' => 'testing123'));
+		$this->call('POST', $this->prefix.'sessions', array('username' => 'leirvik.tommy@gmail.com', 'password' => 'testing123'));
 
-		$this->assertRedirectedTo(Config::get('leitom.boilerplate::prefix').'/dashboard');
+		if( ! empty($this->prefix))
+			$this->assertRedirectedTo("$this->prefix$this->defaultAppPage");
+		else
+			$this->assertRedirectedTo('dashboard');
 	}
 
 	public function testStoreFails()
 	{
 		Auth::shouldReceive('attempt')->once()->andReturn(false);
 		
-		$this->call('POST', Config::get('leitom.boilerplate::prefix').'/sessions');
+		$this->call('POST', $this->prefix.'sessions');
 
 		$this->assertSessionHas('loginError');
 
-		$this->assertRedirectedTo(Config::get('leitom.boilerplate::prefix').'/'.Config::get('leitom.boilerplate::loginAlias'));
+		$this->assertRedirectedTo($this->prefix.Config::get('leitom.boilerplate::loginAlias'));
 	}
 
 	public function testDestroy()
 	{
 		Auth::shouldReceive('logout')->once()->andReturn(true);
 
-		$this->call('DELETE', Config::get('leitom.boilerplate::prefix').'/sessions/1');
+		$this->call('DELETE', $this->prefix.'sessions/1');
 
 		$this->assertSessionHas('logoutMessage');
 
-		$this->assertRedirectedTo(Config::get('leitom.boilerplate::prefix').'/'.Config::get('leitom.boilerplate::loginAlias'));
+		$this->assertRedirectedTo($this->prefix.Config::get('leitom.boilerplate::loginAlias'));
 	}
 
 }

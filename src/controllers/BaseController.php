@@ -29,6 +29,13 @@ class BaseController extends \Controller {
 	protected $logoutAlias = '';
 
 	/**
+	 * The default app page
+	 *
+	 * @var string $defaultAppPage
+	 */
+	protected $defaultAppPage = '';
+
+	/**
 	 * Setup the layout used by the controller.
 	 *
 	 * @return void
@@ -43,13 +50,16 @@ class BaseController extends \Controller {
 		// Get routes and aliases from config
 		
 		// Base prefix
-		$this->prefix = Config::get('leitom.boilerplate::prefix');
+		$this->prefix = Config::get('leitom.boilerplate::prefix').'/' ?: '';
 
 		// Login alias
 		$this->loginAlias = Config::get('leitom.boilerplate::loginAlias');
 
 		// Logout alias
 		$this->logoutAlias = Config::get('leitom.boilerplate::logoutAlias');
+
+		// Default app page
+		$this->defaultAppPage = Config::Get('leitom.boilerplate::defaultAppPage');
 	}
 
 }

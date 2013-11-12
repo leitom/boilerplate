@@ -23,7 +23,16 @@ Route::group(array('prefix' => Config::get('leitom.boilerplate::prefix')), funct
 	Route::get(Config::get('leitom.boilerplate::logoutAlias'), 'Leitom\Boilerplate\Controllers\SessionsController@destroy');
 
 	// All handeling of sessions goes to the sessions controller
-	Route::resource('sessions', 'Leitom\Boilerplate\Controllers\SessionsController');
+	Route::resource('sessions', 'Leitom\Boilerplate\Controllers\SessionsController', array('only' => array('create', 'store', 'destroy')));
+
+	// Create a new account
+	Route::resource('account', 'Leitom\Boilerplate\Controllers\AccountController', array('only' => array('create', 'store')));
+
+	Route::get('test', function()
+	{
+		$users = App::make('Leitom\Boilerplate\Repositories\UsersRepositoryInterface');
+		dd($users);
+	});
 
 	// All routes and actions secured by the auth filter
 	

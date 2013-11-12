@@ -29,7 +29,7 @@ class SessionsController extends BaseController {
 	 */
 	public function create()
 	{
-        $this->layout->content = View::make('leitom.boilerplate::login');
+        $this->layout->content = View::make(Config::get('leitom.boilerplate::loginView'));
 	}
 
 	/**
@@ -45,9 +45,9 @@ class SessionsController extends BaseController {
 			'active'   => 1
 		);
 		
-		if (Auth::attempt($credentials, Input::get('remember'))) return Redirect::intended('app/dashboard');
+		if (Auth::attempt($credentials, Input::get('remember'))) return Redirect::intended("$this->prefix$this->defaultAppPage");
 
-		return Redirect::to("$this->prefix/$this->loginAlias")->withInput()->with('loginError', trans('leitom.boilerplate::sessions.wrong_username_or_password'));
+		return Redirect::to("$this->prefix$this->loginAlias")->withInput()->with('loginError', trans('leitom.boilerplate::sessions.wrong_username_or_password'));
 	}
 
 	/**
@@ -59,7 +59,7 @@ class SessionsController extends BaseController {
 	{
 		Auth::logout();
 
-		return Redirect::to("$this->prefix/$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::sessions.logged_out'));
+		return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::sessions.logged_out'));
 	}
 
 }

@@ -38,6 +38,17 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Login view
+	|--------------------------------------------------------------------------
+	|
+	| The login view the application should use
+	|
+	*/	
+
+	'loginView' => 'leitom.boilerplate::login',
+
+	/*
+	|--------------------------------------------------------------------------
 	| Alias for the logout route
 	|--------------------------------------------------------------------------
 	|
@@ -46,6 +57,19 @@ return array(
 	*/	
 
 	'logoutAlias' => 'logout',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Default app page
+	|--------------------------------------------------------------------------
+	|
+	| Default login page for the application
+	| When a user logs in we try to serve the request url, but if that does
+	| not exists we provide a default one.
+	|
+	*/	
+
+	'defaultAppPage' => 'dashboard',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -35,7 +35,7 @@
                 {{ Form::close() }}
             </div>
             @if (Config::get('leitom.boilerplate::allowUserRegistrations'))
-            <a href="#" class="text-center new-account">{{ trans('leitom.boilerplate::sessions.create_an_account') }} </a>
+            <a href="{{ BoilerplateURL::routeTo('account.create') }}" class="text-center new-account">{{ trans('leitom.boilerplate::sessions.create_an_account') }} </a>
             @endif
         </div>
     </div>

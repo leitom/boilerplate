@@ -43,3 +43,5 @@
 - Boilerplate url helper can be refered trough the BoilerplateURL::function accessor
 ### Supported types:
 - BoilerplateURL::route return a route with prefix set in configuration example: BoilerplateURL::route('sessions.store') // outputs app.sessions.store by default
+- BoilerplateURL::routeTo return a route with prefix set in configuration as an url example: BoilerplateURL::routeTo('sessions.store') // outputs http://www.domain.com/app/sessions/store
+- BoilerplateURL::to return a url with prefix set in configuration example: BoilerplateURL::to('new-account') // outputs http://www.domain.com/app/new-account by default
