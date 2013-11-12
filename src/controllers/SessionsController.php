@@ -1,6 +1,6 @@
 <?php namespace Leitom\Boilerplate\Controllers;
 
-use View, Auth, Input, Redirect, MessageBag;
+use View, Auth, Input, Redirect, Config, MessageBag;
 
 class SessionsController extends BaseController {
 
@@ -47,7 +47,7 @@ class SessionsController extends BaseController {
 		
 		if (Auth::attempt($credentials, Input::get('remember'))) return Redirect::intended('app/dashboard');
 
-		return Redirect::to('app/login')->withInput()->with('loginError', trans('leitom.boilerplate::sessions.wrong_username_or_password'));
+		return Redirect::to("$this->prefix/$this->loginAlias")->withInput()->with('loginError', trans('leitom.boilerplate::sessions.wrong_username_or_password'));
 	}
 
 	/**
@@ -59,7 +59,7 @@ class SessionsController extends BaseController {
 	{
 		Auth::logout();
 
-		return Redirect::to('app/login')->with('logoutMessage', trans('leitom.boilerplate::sessions.logged_out'));
+		return Redirect::to("$this->prefix/$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::sessions.logged_out'));
 	}
 
 }

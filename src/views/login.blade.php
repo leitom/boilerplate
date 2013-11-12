@@ -23,7 +23,7 @@
 
             <div class="account-wall">
                 <img class="profile-img" src="{{ BoilerplateAsset::image('login.png') }}" alt="">
-                {{ Form::open(array('route' => 'app.sessions.store', 'class' => 'form-signin')) }}
+                {{ Form::open(array('route' => BoilerplateURL::route('sessions.store'), 'class' => 'form-signin')) }}
                 {{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => trans('leitom.boilerplate::sessions.username'), 'required', 'autofocus')) }}
                 {{ Form::password('password', array('class' => 'form-control', 'placeholder' => trans('leitom.boilerplate::sessions.password'), 'required')) }}
                 <button class="btn btn-lg btn-primary btn-block" type="submit">{{ trans('leitom.boilerplate::sessions.signin') }}</button>

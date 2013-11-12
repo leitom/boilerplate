@@ -24,12 +24,23 @@ class HelperServiceProvider extends ServiceProvider {
 			return new \Leitom\Boilerplate\Helpers\AssetHelper;
 		});
 
+		// Url helper
+		$this->app['BoilerplateURL'] = $this->app->share(function($app)
+		{
+			return new \Leitom\Boilerplate\Helpers\UrlHelper;
+		});
+
 		// Connect parts to the laravel application boot
 		$this->app->booting(function()
 		{
 			// Load facades aliases
 			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+
+			// Assets
 			$loader->alias('BoilerplateAsset', 'Leitom\Boilerplate\Helpers\Facades\AssetHelper');
+
+			// Url
+			$loader->alias('BoilerplateURL', 'Leitom\Boilerplate\Helpers\Facades\UrlHelper');
 		});
 	}
 

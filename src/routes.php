@@ -11,21 +11,16 @@
 |
 */
 
-Route::get('test', function()
-{
-	dd(Config::get('leitom.boilerplate::basePrefix'));
-});
-
 // All routes in the Leitom\Boilerplate are default prefixed with << app >>
-Route::group(array('prefix' => 'app'), function()
+Route::group(array('prefix' => Config::get('leitom.boilerplate::prefix')), function()
 {
 	// All open routes
 
 	// Alias for app/sessions/create
-	Route::get('login', 'Leitom\Boilerplate\Controllers\SessionsController@create');
+	Route::get(Config::get('leitom.boilerplate::loginAlias'), 'Leitom\Boilerplate\Controllers\SessionsController@create');
 
 	// Alias for app/sessions/destroy
-	Route::get('logout', 'Leitom\Boilerplate\Controllers\SessionsController@destroy');
+	Route::get(Config::get('leitom.boilerplate::logoutAlias'), 'Leitom\Boilerplate\Controllers\SessionsController@destroy');
 
 	// All handeling of sessions goes to the sessions controller
 	Route::resource('sessions', 'Leitom\Boilerplate\Controllers\SessionsController');

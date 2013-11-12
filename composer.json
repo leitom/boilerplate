@@ -11,10 +11,17 @@
         "php": ">=5.3.0",
         "illuminate/support": "4.0.*"
     },
+    "require-dev": {
+        "way/generators": "dev-master",
+        "way/laravel-test-helpers": "dev-master",
+        "illuminate/foundation": "4.0.*",
+        "mockery/mockery": "dev-master"
+    },
     "autoload": {
         "classmap": [
-	    "src/controllers",
-	    "src/migrations"
+    	    "src/controllers",
+    	    "src/migrations",
+            "../../../app/tests/TestCase.php"
         ],
         "psr-0": {
             "Leitom\\Boilerplate\\": "src/"

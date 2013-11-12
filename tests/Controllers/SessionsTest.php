@@ -2,9 +2,13 @@
 
 class SessionsTest extends TestCase {
 
+	protected $loginUrl = '';
+
 	public function setUp()
 	{
 		parent::setUp();
+
+		$this->loginUrl = 'app/login';
 	}
 
 	public function testCreate()
@@ -18,30 +22,30 @@ class SessionsTest extends TestCase {
 	{
 		Auth::shouldReceive('attempt')->once()->andReturn(true);
 
-		$this->call('POST', 'app/sessions', array('username' => 'leirvik.tommy@gmail.com', 'password' => 'leitom123'));
+		$this->call('POST', Config::get('leitom.boilerplate::prefix').'/sessions', array('username' => 'leirvik.tommy@gmail.com', 'password' => 'testing123'));
 
-		$this->assertRedirectedTo('app/dashboard');
+		$this->assertRedirectedTo(Config::get('leitom.boilerplate::prefix').'/dashboard');
 	}
 
 	public function testStoreFails()
 	{
 		Auth::shouldReceive('attempt')->once()->andReturn(false);
-		$this->call('POST', 'app/sessions');
+		$this->call('POST', Config::get('leitom.boilerplate::prefix').'/sessions');
 
 		$this->assertSessionHas('loginError');
 
-		$this->assertRedirectedTo('app/login');
+		$this->assertRedirectedTo($this->loginUrl);
 	}
 
 	public function testDestroy()
 	{
 		Auth::shouldReceive('logout')->once()->andReturn(true);
 
-		$this->call('DELETE', 'app/sessions/1');
+		$this->call('DELETE', Config::get('leitom.boilerplate::prefix').'/sessions/1');
 
 		$this->assertSessionHas('logoutMessage');
 
-		$this->assertRedirectedTo('app/login');
+		$this->assertRedirectedTo($this->loginUrl);
 	}
 
 }

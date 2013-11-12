@@ -2,12 +2,14 @@
 - Author Tommy Leirvik
 - Email leirvik.tommy@gmail.com
 
+### ps.: dont use this package yet, it's in development!
+
 # Installation notes
 - add Leitom\Boilerplate\Providers\BoilerplateServiceProvider to your provider array in config/app.php
 - run php artisan migrate -package leitom/boilerplate
 - run php artisan db:seed -package leitom/boilerplate
 
-#Configurating auth
+# Configurating auth
 - Add Eloquent as the auth driver
 - Use Leitom\Boilerplate\User as the model
 - Set users as the table
@@ -23,9 +25,6 @@
 - usage in templates: @extends('leitom.boilerplate::master');, @include('leitom.boilerplate::_partials.head');
 
 # Boilerplate assets
-- Boilerplate assets can be refered trough the BoilerplateAsset:: accessor
-- example: BoilerplateAsset::style('lib/bootstrap-3.0.2/bootstrap.min.css');
-
 - Boilerplate assets placeholders:
 - in head there are on placeholder for styles and scripts called head.styles, head.scripts to add styles from any template:
 - example: @section('head.styles') @parent <my style> @stop
@@ -34,6 +33,13 @@
 # Boilerplate helpers
 
 ## Asset helper
+- Boilerplate assets can be refered trough the BoilerplateAsset::function accessor
+- example: BoilerplateAsset::style('lib/bootstrap-3.0.2/bootstrap.min.css');
 - The asset helper can be reffered to with Boilerplate::<type>
 - Supported types are style, script and image
 - script and syle returns larvel HTML::script/style
+
+## Url helper
+- Boilerplate url helper can be refered trough the BoilerplateURL::function accessor
+### Supported types:
+- BoilerplateURL::route return a route with prefix set in configuration example: BoilerplateURL::route('sessions.store') // outputs app.sessions.store by default
