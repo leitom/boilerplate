@@ -21,6 +21,9 @@ class ViewComposerServiceProvider extends ServiceProvider {
 	{
 		// Public master
 		View::composer('leitom.boilerplate::public_master', 'Leitom\Boilerplate\Composers\PublicMasterComposer');
+
+		// App master
+		View::composer('leitom.boilerplate::app_master', 'Leitom\Boilerplate\Composers\AppMasterComposer');
 	}
 
 	/**

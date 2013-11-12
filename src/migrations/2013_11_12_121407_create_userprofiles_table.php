@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTable extends Migration {
+class CreateUserprofilesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,16 +12,16 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users', function(Blueprint $table) {
+		Schema::create('userprofiles', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('email')->unique();
-			$table->string('username')->unique();
-			$table->string('password', 255);
-			$table->boolean('active')->default(0);
+			$table->string('firstname', 150);
+			$table->string('middlename', 150);
+			$table->string('lastname', 150);
+			$table->integer('users_id'); // Forreign key to users table
 			$table->integer('created_by'); // Used by the Boilerplate Model implementation of eloquent 
 			$table->integer('updated_by'); // Used by the Boilerplate Model implementation of eloquent 
-			$table->timestamps();
 			$table->softDeletes();
+			$table->timestamps();
 		});
 	}
 
@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::drop('userprofiles');
 	}
 
 }
