@@ -2,13 +2,9 @@
 
 class SessionsTest extends TestCase {
 
-	protected $loginUrl = '';
-
 	public function setUp()
 	{
 		parent::setUp();
-
-		$this->loginUrl = 'app/login';
 	}
 
 	public function testCreate()
@@ -16,6 +12,8 @@ class SessionsTest extends TestCase {
 		$this->call('GET', 'app/login');
 
 		$this->assertResponseOk();
+
+		$this->assertViewHas('title');
 	}
 
 	public function testStore()
@@ -30,11 +28,12 @@ class SessionsTest extends TestCase {
 	public function testStoreFails()
 	{
 		Auth::shouldReceive('attempt')->once()->andReturn(false);
+		
 		$this->call('POST', Config::get('leitom.boilerplate::prefix').'/sessions');
 
 		$this->assertSessionHas('loginError');
 
-		$this->assertRedirectedTo($this->loginUrl);
+		$this->assertRedirectedTo(Config::get('leitom.boilerplate::prefix').'/'.Config::get('leitom.boilerplate::loginAlias'));
 	}
 
 	public function testDestroy()
@@ -45,7 +44,7 @@ class SessionsTest extends TestCase {
 
 		$this->assertSessionHas('logoutMessage');
 
-		$this->assertRedirectedTo($this->loginUrl);
+		$this->assertRedirectedTo(Config::get('leitom.boilerplate::prefix').'/'.Config::get('leitom.boilerplate::loginAlias'));
 	}
 
 }
