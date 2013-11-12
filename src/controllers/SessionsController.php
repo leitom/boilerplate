@@ -47,7 +47,7 @@ class SessionsController extends BaseController {
 		
 		if (Auth::attempt($credentials, Input::get('remember'))) return Redirect::intended('app/dashboard');
 
-		return Redirect::to('app/login')->withInput()->with('loginError', trans('sessions.wrong_username_or_password'));
+		return Redirect::to('app/login')->withInput()->with('loginError', trans('leitom.boilerplate::sessions.wrong_username_or_password'));
 	}
 
 	/**
@@ -59,7 +59,7 @@ class SessionsController extends BaseController {
 	{
 		Auth::logout();
 
-		return Redirect::to('app/login')->with('logoutMessage', trans('sessions.logged_out'));
+		return Redirect::to('app/login')->with('logoutMessage', trans('leitom.boilerplate::sessions.logged_out'));
 	}
 
 }

@@ -24,17 +24,19 @@
             <div class="account-wall">
                 <img class="profile-img" src="{{ BoilerplateAsset::image('login.png') }}" alt="">
                 {{ Form::open(array('route' => 'app.sessions.store', 'class' => 'form-signin')) }}
-                {{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => trans('sessions.username'), 'required', 'autofocus')) }}
-                {{ Form::password('password', array('class' => 'form-control', 'placeholder' => trans('sessions.password'), 'required')) }}
-                <button class="btn btn-lg btn-primary btn-block" type="submit">{{ trans('sessions.signin') }}</button>
+                {{ Form::text('username', null, array('class' => 'form-control', 'placeholder' => trans('leitom.boilerplate::sessions.username'), 'required', 'autofocus')) }}
+                {{ Form::password('password', array('class' => 'form-control', 'placeholder' => trans('leitom.boilerplate::sessions.password'), 'required')) }}
+                <button class="btn btn-lg btn-primary btn-block" type="submit">{{ trans('leitom.boilerplate::sessions.signin') }}</button>
                 <label class="checkbox pull-left">
                     {{ Form::checkbox('remember', '1', false) }}
-                    {{ trans('sessions.remember_me') }}
+                    {{ trans('leitom.boilerplate::sessions.remember_me') }}
                 </label>
-                <a href="#" class="pull-right need-help">{{ trans('sessions.forgot_password') }} </a><span class="clearfix"></span>
+                <a href="#" class="pull-right need-help">{{ trans('leitom.boilerplate::sessions.forgot_password') }} </a><span class="clearfix"></span>
                 {{ Form::close() }}
             </div>
-            <a href="#" class="text-center new-account">{{ trans('sessions.create_an_account') }} </a>
+            @if (Config::get('leitom.boilerplate::allowUserRegistrations'))
+            <a href="#" class="text-center new-account">{{ trans('leitom.boilerplate::sessions.create_an_account') }} </a>
+            @endif
         </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
 <?php namespace Leitom\Boilerplate\Providers;
 
+use View, Config, Lang;
 use Illuminate\Support\ServiceProvider;
 
 class BoilerplateServiceProvider extends ServiceProvider {
@@ -21,7 +22,16 @@ class BoilerplateServiceProvider extends ServiceProvider {
 		// Init the package
 		$this->package('leitom/boilerplate');
 
-		// Require
+		// Config path
+		Config::package('leitom/boilerplate', __DIR__.'/../../../config', 'leitom.boilerplate');
+
+		// Language path
+		Lang::addNamespace('leitom.boilerplate', __DIR__.'/../../../lang');
+
+		// View path
+		View::addNamespace('leitom.boilerplate', __DIR__.'/../../../views');
+
+		// Require filters and routes
 		require __DIR__.'/../../../filters.php';
 		require __DIR__.'/../../../routes.php';
 	}
@@ -33,9 +43,6 @@ class BoilerplateServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		// View path
-		\View::addNamespace('leitom.boilerplate', __DIR__.'/../../../views');
-
 		// Asset helper
 		$this->app->register('Leitom\Boilerplate\Providers\HelperServiceProvider');
 	}
