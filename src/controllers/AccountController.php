@@ -1,6 +1,6 @@
 <?php namespace Leitom\Boilerplate\Controllers;
 
-use View;
+use View, Config;
 
 class AccountController extends BaseController {
 
@@ -11,7 +11,7 @@ class AccountController extends BaseController {
 	 */
 	public function create()
 	{
-        return View::make('leitom.boilerplate::create_account');
+        return View::make(Config::get('leitom.boilerplate::newAccountView'));
 	}
 
 	/**

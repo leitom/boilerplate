@@ -48,4 +48,9 @@ class User extends Model implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	public function userProfile()
+	{
+		return $this->hasOne('Leitom\Boilerplate\UserProfile');
+	}
+
 }

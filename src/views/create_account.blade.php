@@ -21,25 +21,6 @@
             <input class="form-control" name="reenteremail" placeholder="Re-enter Email" type="email" />
             <input class="form-control" name="username" placeholder="Username" type="text" />
             <input class="form-control" name="password" placeholder="New Password" type="password" />
-            <label for="">
-                Birth Date</label>
-            <div class="row">
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Month">Month</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Day">Day</option>
-                    </select>
-                </div>
-                <div class="col-xs-4 col-md-4">
-                    <select class="form-control">
-                        <option value="Year">Year</option>
-                    </select>
-                </div>
-            </div>
             <button class="btn btn-lg btn-primary btn-block" type="submit">
                 Sign up</button>
             </form>

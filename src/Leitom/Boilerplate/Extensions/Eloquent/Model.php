@@ -36,6 +36,14 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	protected static $rules = array();
 	
 	/**
+	 * If we should set the following fields:
+	 * created_by, updated_by
+	 *
+	 * @var boolean $audit
+	 */
+	protected $audit = false;
+
+	/**
 	 * Reconstruct the Illuminate\Database\Eloquent\Model
 	 * 
 	 * @param array $attributes
@@ -113,10 +121,39 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 		parent::boot();
 		
 		// Event listeners
+		static::creating(function($model)
+		{
+			if($this->audit) $this->setCreatedBy();
+		});
+
 		static::saving(function($model)
 		{
+			if($this->autit) $this->setUpdatedBy();
+			
 			return $model->validate();
 		});
 	}
 	
+	/**
+	 * If audit are enabled for the model
+	 * then we set the created by with info from the Auth instance
+	 *
+	 * @return void
+	 */
+	protected function setCreatedBy()
+	{
+		$this->attributes['created_by'] = Auth::User()->id;
+	}
+
+	/**
+	 * If audit are enabled for the model
+	 * then we set the updated by with info from the Auth instance
+	 *
+	 * @return void
+	 */
+	protected function setUpdatedBy()
+	{
+		$this->attributes['updated_by'] = Auth::User()->id;
+	}
+
 }

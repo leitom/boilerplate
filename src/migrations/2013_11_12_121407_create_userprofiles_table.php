@@ -17,7 +17,7 @@ class CreateUserprofilesTable extends Migration {
 			$table->string('firstname', 150);
 			$table->string('middlename', 150);
 			$table->string('lastname', 150);
-			$table->integer('users_id'); // Forreign key to users table
+			$table->integer('user_id'); // Forreign key to users table
 			$table->integer('created_by'); // Used by the Boilerplate Model implementation of eloquent 
 			$table->integer('updated_by'); // Used by the Boilerplate Model implementation of eloquent 
 			$table->softDeletes();

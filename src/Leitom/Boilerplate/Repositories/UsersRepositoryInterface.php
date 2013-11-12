@@ -16,17 +16,8 @@ interface UsersRepositoryInterface {
 
 	// Delete user
 	public function delete($id);
-
-	/**
-	 * Relationships
-	 * Becuse we use eloquent models sometimes we need to make sure that other
-	 * implementations also can provide the same functionality
-	 */
-
-	// userprofiles
-	public function userprofiles();
-
+	
 	// Attach an instance of UserProfilesInterface to a user
-	public function attachUserProfile($id, UserProfilesRepositoryInterface $userProfile);
+	public function attachUserProfile($id, $userProfile);
 
 }

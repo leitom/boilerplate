@@ -1,40 +1,41 @@
 <?php namespace Leitom\Boilerplate\Repositories;
 
+use Leitom\Boilerplate\User as User;
+
 class EloquentUsersRepository implements UsersRepositoryInterface {
 
 	public function all()
 	{
-
+		return User::all();
 	}	
 
 	public function find($id)
 	{
-
+		return User::find($id);
 	}
 
 	public function create(array $attributes = array())
 	{
-
+		return User::create($attributes);
 	}
 
 	public function update($id, array $attributes = array())
 	{
-
+		$user = $this->find($id);
+		$user->fill($attributes);
+		return $user->save();
 	}
 
 	public function delete($id)
 	{
-
+		$user = $this->find($id);
+		return $user->delete();
 	}
 
-	public function userprofiles()
+	public function attachUserProfile($id, $userProfile)
 	{
-
-	}
-
-	public function attachUserProfile($id, UserProfilesRepositoryInterface $userProfile)
-	{
-		
+		$user = $this->find($id);
+		return $user->userProfile()->associate($userProfile);
 	}
 
 }
