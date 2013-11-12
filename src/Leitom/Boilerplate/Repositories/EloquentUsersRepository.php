@@ -35,7 +35,8 @@ class EloquentUsersRepository implements UsersRepositoryInterface {
 	public function attachUserProfile($id, $userProfile)
 	{
 		$user = $this->find($id);
-		return $user->userProfile()->associate($userProfile);
+		$user->userProfile()->associate($userProfile);
+		return $user;
 	}
 
 }

@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Validation\Validator as Validator;
 use Illuminate\Support\MessageBag;
 use \Leitom\Boilerplate\Extensions\ValidatorInterface;
+use Auth;
 
 abstract class Model extends Eloquent implements ValidatorInterface {
 	
@@ -121,15 +122,8 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 		parent::boot();
 		
 		// Event listeners
-		static::creating(function($model)
-		{
-			if($this->audit) $this->setCreatedBy();
-		});
-
 		static::saving(function($model)
 		{
-			if($this->autit) $this->setUpdatedBy();
-			
 			return $model->validate();
 		});
 	}
@@ -142,7 +136,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	protected function setCreatedBy()
 	{
-		$this->attributes['created_by'] = Auth::User()->id;
+		$this->attributes['created_by'] = Auth::check() ? Auth::User()->id : 1;
 	}
 
 	/**
@@ -153,7 +147,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	protected function setUpdatedBy()
 	{
-		$this->attributes['updated_by'] = Auth::User()->id;
+		$this->attributes['updated_by'] = Auth::check() ? Auth::User()->id : 1;
 	}
 
 }

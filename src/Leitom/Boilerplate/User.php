@@ -10,6 +10,10 @@ class User extends Model implements UserInterface, RemindableInterface {
 
 	protected $hidden = array('password');
 
+	protected $guarded = array('id', 'created_by', 'updated_by');
+
+	protected $audit = true;
+
 	public static $rules = array(
 		'firstname' => 'required',
 		'lastname' 	=> 'required',

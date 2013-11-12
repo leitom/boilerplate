@@ -32,6 +32,9 @@ Route::group(array('prefix' => Config::get('leitom.boilerplate::prefix')), funct
 	{
 		$users = App::make('Leitom\Boilerplate\Repositories\UsersRepositoryInterface');
 		$user = $users->find(1);
+		$user->username = 'leitom';
+		$user->save();
+		
 		dd($user->userProfile->firstname);
 	});
 
