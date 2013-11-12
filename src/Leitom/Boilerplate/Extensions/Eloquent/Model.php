@@ -97,37 +97,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	{
 		return $this->validationFailed;
 	}
-	
-	/**
-	 * Get instances by key and value
-	 *
-	 * @param string $key
-	 * @param string $value
-	 * @param array $with
-	 * @return array
-	 */
-	public function getBy($key, $value, $with = array())
-	{
-		return $this->make($with)->where($key, '=', $value)->get();
-	}
 
-	/**
-	 * Laravel Eloquent models comes with a handy boot function
-	 * this allows us to listen to events created by the model
-	 * 
-	 * @return boolean
-	 */
-	protected static function boot()
-	{
-		parent::boot();
-		
-		// Event listeners
-		static::saving(function($model)
-		{
-			return $model->validate();
-		});
-	}
-	
 	/**
 	 * If audit are enabled for the model
 	 * then we set the created by with info from the Auth instance
@@ -148,6 +118,23 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	protected function setUpdatedBy()
 	{
 		$this->attributes['updated_by'] = Auth::check() ? Auth::User()->id : 1;
+	}
+
+	/**
+	 * Laravel Eloquent models comes with a handy boot function
+	 * this allows us to listen to events created by the model
+	 * 
+	 * @return boolean
+	 */
+	protected static function boot()
+	{
+		parent::boot();
+		
+		// Event listeners
+		static::saving(function($model)
+		{
+			return $model->validate();
+		});
 	}
 
 }

@@ -8,11 +8,14 @@ class UserProfile extends Model {
 
 	protected $table = 'userprofiles';
 
-	protected $guarded = array('id', 'user_id', 'created_by', 'updated_by');
-
-	public static $rules = array();
-
+	protected $fillable = array('firstname', 'middlename', 'lastname');
+	
 	protected $audit = true;
+
+	public static $rules = array(
+		'firstname' => 'required',
+		'lastname' 	=> 'required'
+	);
 
 	public function user()
 	{

@@ -31,11 +31,8 @@ Route::group(array('prefix' => Config::get('leitom.boilerplate::prefix')), funct
 	Route::get('test', function()
 	{
 		$users = App::make('Leitom\Boilerplate\Repositories\UsersRepositoryInterface');
-		$user = $users->find(1);
-		$user->username = 'leitom';
-		$user->save();
-		
-		dd($user->userProfile->firstname);
+		$user = $users->getBy('id', 1, array('userprofile'));
+		dd($user->toArray());
 	});
 
 	// All routes and actions secured by the auth filter
