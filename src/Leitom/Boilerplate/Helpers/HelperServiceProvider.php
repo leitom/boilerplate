@@ -1,4 +1,4 @@
-<?php namespace Leitom\Boilerplate\Providers;
+<?php namespace Leitom\Boilerplate\Helpers;
 
 use Illuminate\Support\ServiceProvider;
 

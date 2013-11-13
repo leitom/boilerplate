@@ -1,4 +1,4 @@
-<?php namespace Leitom\Boilerplate\Providers;
+<?php namespace Leitom\Boilerplate\Extensions;
 
 use Illuminate\Support\ServiceProvider;
 use Validator;

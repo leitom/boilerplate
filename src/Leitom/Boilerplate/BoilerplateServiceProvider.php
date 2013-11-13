@@ -1,4 +1,4 @@
-<?php namespace Leitom\Boilerplate\Providers;
+<?php namespace Leitom\Boilerplate;
 
 use View, Config, Lang;
 use Illuminate\Support\ServiceProvider;
@@ -23,17 +23,17 @@ class BoilerplateServiceProvider extends ServiceProvider {
 		$this->package('leitom/boilerplate');
 
 		// Config path
-		Config::package('leitom/boilerplate', __DIR__.'/../../../config', 'leitom.boilerplate');
+		Config::package('leitom/boilerplate', __DIR__.'/../../config', 'leitom.boilerplate');
 
 		// Language path
-		Lang::addNamespace('leitom.boilerplate', __DIR__.'/../../../lang');
+		Lang::addNamespace('leitom.boilerplate', __DIR__.'/../../lang');
 
 		// View path
-		View::addNamespace('leitom.boilerplate', __DIR__.'/../../../views');
+		View::addNamespace('leitom.boilerplate', __DIR__.'/../../views');
 
 		// Require filters and routes
-		require __DIR__.'/../../../filters.php';
-		require __DIR__.'/../../../routes.php';
+		require __DIR__.'/../../filters.php';
+		require __DIR__.'/../../routes.php';
 	}
 
 	/**
@@ -44,16 +44,19 @@ class BoilerplateServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		// Extensions provider
-		$this->app->register('Leitom\Boilerplate\Providers\ExtensionsServiceProvider');
+		$this->app->register('Leitom\Boilerplate\Extensions\ExtensionsServiceProvider');
 
 		// Asset provider
-		$this->app->register('Leitom\Boilerplate\Providers\HelperServiceProvider');
+		$this->app->register('Leitom\Boilerplate\Helpers\HelperServiceProvider');
 
 		// Repository provider
-		$this->app->register('Leitom\Boilerplate\Providers\RepositoryServiceProvider');
+		$this->app->register('Leitom\Boilerplate\Repositories\RepositoryServiceProvider');
 
 		// View composer provider
-		$this->app->register('Leitom\Boilerplate\Providers\ViewComposerServiceProvider');
+		$this->app->register('Leitom\Boilerplate\Composers\ViewComposerServiceProvider');
+
+		// Account service provider
+		$this->app->register('Leitom\Boilerplate\Account\AccountServiceProvider');
 	}
 
 	/**

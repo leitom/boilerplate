@@ -38,4 +38,14 @@ class AccountController extends BaseController {
 		return Redirect::to("{$this->prefix}account/create")->withErrors($user->getValidatorErrors())->withInput();
 	}
 
+	/**
+	 * Store a resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function update($id)
+	{
+		//
+	}
+
 }
