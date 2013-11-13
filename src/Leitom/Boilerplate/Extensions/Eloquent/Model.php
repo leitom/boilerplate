@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Validation\Validator as Validator;
 use Illuminate\Support\MessageBag;
 use \Leitom\Boilerplate\Extensions\ValidatorInterface;
-use Auth;
+use Auth, Str, Hash;
 
 abstract class Model extends Eloquent implements ValidatorInterface {
 	
@@ -36,6 +36,13 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	protected static $rules = array();
 	
+	/** 
+	 * Custom validation messages
+	 *
+	 * @var array $customMessages
+	 */
+	protected static $customMessages = array();
+
 	/**
 	 * If we should set the following fields:
 	 * created_by, updated_by
@@ -61,6 +68,31 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	}
 	
 	/**
+	 * Override the eloquent save method and do some work on our own
+	 *
+	 * @param array $options
+	 * @return obj
+	 */
+	public function save(array $options = array())
+	{
+		if( ! empty($options)) $this->fill($options);
+
+		if( ! $this->validate()) return false;
+
+		$this->purgeRedundant();
+
+		$this->autoHash();
+
+		if($this->audit)
+		{
+			$this->setCreatedBy();
+			$this->setUpdatedBy();
+		}
+
+		return parent::save($options);
+	}
+
+	/**
 	 * Validate all model data here
 	 * Based on the rules set in array $this->rules
 	 * 
@@ -68,7 +100,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	public function validate()
 	{
-		$check = $this->validator->make($this->attributes, static::$rules);
+		$check = $this->validator->make($this->attributes, static::$rules, static::$customMessages);
 		
 		if ($check->passes()) return true;
 		
@@ -99,6 +131,42 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	}
 
 	/**
+	 * Purge Redundant fields
+	 * Get rid of '_confirm' fields
+	 *
+	 * @param array $attributes
+	 * @return void
+	 */
+	private function purgeRedundant()
+	{
+		$clean = array();
+
+		foreach ($this->attributes as $key => $value)
+		{
+			if ( ! Str::endsWith($key, '_confirmation')) $clean[$key] = $value;
+		}
+	  
+	  	$this->attributes = $clean;
+	}
+
+	/**
+	 * Auto hash
+	 * Auto hash passwords
+	 *
+	 * @return array $this->attributes
+	 */
+	private function autoHash()
+	{
+		if (isset($this->attributes['password']))
+	  	{
+	    	if ($this->attributes['password'] != $this->getOriginal('password'))
+	    	{
+	      		$this->attributes['password'] = Hash::make($this->attributes['password']);
+	    	}
+	  	}
+	}
+
+	/**
 	 * If audit are enabled for the model
 	 * then we set the created by with info from the Auth instance
 	 *
@@ -106,7 +174,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	protected function setCreatedBy()
 	{
-		$this->attributes['created_by'] = Auth::check() ? Auth::User()->id : 1;
+		if (Auth::check() && empty($this->attributes['created_by'])) $this->attributes['created_by'] = Auth::User()->id;
 	}
 
 	/**
@@ -117,24 +185,10 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	protected function setUpdatedBy()
 	{
-		$this->attributes['updated_by'] = Auth::check() ? Auth::User()->id : 1;
-	}
-
-	/**
-	 * Laravel Eloquent models comes with a handy boot function
-	 * this allows us to listen to events created by the model
-	 * 
-	 * @return boolean
-	 */
-	protected static function boot()
-	{
-		parent::boot();
-		
-		// Event listeners
-		static::saving(function($model)
+		if (Auth::check())
 		{
-			return $model->validate();
-		});
+			if (Auth::User()->id != $this->getOriginal('updated_by')) $this->attributes['updated_by'] = Auth::User()->id;
+		}
 	}
 
 }

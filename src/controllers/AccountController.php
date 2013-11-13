@@ -1,8 +1,16 @@
 <?php namespace Leitom\Boilerplate\Controllers;
 
-use View, Config;
+use View, Config, Input, Redirect;
+use \Leitom\Boilerplate\Repositories\UsersRepositoryInterface;
 
 class AccountController extends BaseController {
+
+	protected $users;
+
+	public function __construct(UsersRepositoryInterface $users)
+	{
+		$this->users = $users;
+	}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -21,51 +29,13 @@ class AccountController extends BaseController {
 	 */
 	public function store()
 	{
-		//
-	}
+		$input = Input::all();
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-        return View::make('accounts.show');
-	}
+		$user = $this->users->create($input);
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-        return View::make('accounts.edit');
-	}
+		if ( ! $user->hasValidatorErrors()) return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_created'));
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		return Redirect::to("{$this->prefix}account/create")->withErrors($user->getValidatorErrors())->withInput();
 	}
 
 }

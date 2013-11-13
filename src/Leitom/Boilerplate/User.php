@@ -10,15 +10,25 @@ class User extends Model implements UserInterface, RemindableInterface {
 
 	protected $hidden = array('password');
 
-	protected $fillable = array('username', 'email', 'password');
+	protected $fillable = array('username', 'email', 'email_confirmation', 'password', 'password_confirmation');
 
 	protected $audit = true;
 
 	public static $rules = array(
-		'email' 	=> 'required|unique:users',
-		'username' 	=> 'required|unique:users',
-		'password' 	=> 'required|min:6'
+		'email' 	=> 'required|email|unique:users|confirmed',
+		'username' 	=> 'required|unique:users|min:4',
+		'password' 	=> 'required|min:6|confirmed|has:upper,lower,num'
 	);
+
+	/**
+	 * A user has one profile
+	 *
+	 * @return Eloquent relationship
+	 */
+	public function userProfile()
+	{
+		return $this->hasOne('Leitom\Boilerplate\UserProfile');
+	}
 
 	/**
 	 * Get the unique identifier for the user.
@@ -48,16 +58,6 @@ class User extends Model implements UserInterface, RemindableInterface {
 	public function getReminderEmail()
 	{
 		return $this->email;
-	}
-
-	/**
-	 * A user has one profile
-	 *
-	 * @return Eloquent relationship
-	 */
-	public function userProfile()
-	{
-		return $this->hasOne('Leitom\Boilerplate\UserProfile');
 	}
 
 }

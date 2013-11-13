@@ -43,6 +43,9 @@ class BoilerplateServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		// Extensions provider
+		$this->app->register('Leitom\Boilerplate\Providers\ExtensionsServiceProvider');
+
 		// Asset provider
 		$this->app->register('Leitom\Boilerplate\Providers\HelperServiceProvider');
 

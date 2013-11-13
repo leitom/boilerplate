@@ -31,4 +31,14 @@ class UrlHelperTest extends TestCase {
 			$this->assertEquals(Config::Get('app.url').'/new-account', $return);
 	}
 
+	public function testRouteTo()
+	{
+		$return = $this->urlHelper->routeTo('sessions.create');
+
+		if( ! empty($this->prefix))
+			$this->assertEquals(Config::get('app.url').'/app/sessions/create', $return);
+		else
+			$this->assertEquals(Config::get('app.url').'/sessions/create', $return);
+	}
+
 }

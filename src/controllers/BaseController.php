@@ -10,6 +10,7 @@ class BaseController extends \Controller {
 	 *
 	 * @var string $prefix
 	 */
+	protected $routePrefix = '';
 	protected $prefix = '';
 
 	/**
@@ -50,7 +51,8 @@ class BaseController extends \Controller {
 		// Get routes and aliases from config
 		
 		// Base prefix
-		$this->prefix = Config::get('leitom.boilerplate::prefix').'/' ?: '';
+		$this->routePrefix = Config::get('leitom.boilerplate::prefix') ?: '';
+		$this->prefix = $this->routePrefix.'/' ?: '';
 
 		// Login alias
 		$this->loginAlias = Config::get('leitom.boilerplate::loginAlias');
