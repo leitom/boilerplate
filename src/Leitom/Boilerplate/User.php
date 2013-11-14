@@ -14,10 +14,12 @@ class User extends Model implements UserInterface, RemindableInterface {
 
 	protected $audit = true;
 
-	public static $rules = array(
-		'email' 	=> 'required|email|unique:users|confirmed',
-		'username' 	=> 'required|unique:users|min:4',
-		'password' 	=> 'required|min:6|confirmed|has:upper,lower,num'
+	protected $rules = array(
+		'create' => array(
+			'email' 	=> 'required|email|unique:users|confirmed',
+			'username' 	=> 'required|unique:users|min:4',
+			'password' 	=> 'required|min:6|confirmed|has:upper,lower,num'
+		)
 	);
 
 	/**

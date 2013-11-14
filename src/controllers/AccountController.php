@@ -35,10 +35,14 @@ class AccountController extends BaseController {
 
 		if ( ! $user->hasValidatorErrors())
 		{
-			$path = strlen($this->routePrefix) > 0 ? "$this->routePrefix.account.update" : "account.update";
+			$path = strlen($this->routePrefix) > 0 ? "$this->routePrefix.account.show" : "account.show";
 
-			Account::sendActivation($user->email, $path);
+			Account::sendActivation($user->email, $path, function($m, $user)
+			{
+				$m->subject('User Account Activation on boilerplate.com');
+			});
 
+			// Redirect to another page that does just show information about activation, dont go to login...
 			return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_created'));
 		}
 
@@ -52,12 +56,14 @@ class AccountController extends BaseController {
 	 */
 	public function show($token)
 	{
-		Account::activate($token, function($user)
+		$user = Account::activate($token);
+
+		if($user)
 		{
 			return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_activated'));
-		});
-		
-		return "Token not valid";
+		}
+		else
+			return "Token not valid";
 	}
 
 }

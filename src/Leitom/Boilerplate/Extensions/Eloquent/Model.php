@@ -34,14 +34,14 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 * 
 	 * @var array $rules
 	 */
-	protected static $rules = array();
+	protected $rules = array();
 	
 	/** 
 	 * Custom validation messages
 	 *
 	 * @var array $customMessages
 	 */
-	protected static $customMessages = array();
+	protected $customMessages = array();
 
 	/**
 	 * If we should set the following fields:
@@ -68,39 +68,55 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	}
 	
 	/**
-	 * Override the eloquent save method and do some work on our own
+	 * Automatic event listeners connected to the model
 	 *
-	 * @param array $options
-	 * @return obj
+	 * @return void
 	 */
-	public function save(array $options = array())
+	public static function boot()
 	{
-		if( ! empty($options)) $this->fill($options);
+		parent::boot();
 
-		if( ! $this->validate()) return false;
-
-		$this->purgeRedundant();
-
-		$this->autoHash();
-
-		if($this->audit)
+		static::creating(function($model)
 		{
-			$this->setCreatedBy();
-			$this->setUpdatedBy();
-		}
+			if ( ! $model->validate()) return false;
 
-		return parent::save($options);
+			$model->purgeRedundant();
+			$model->autoHash();
+
+			if ($model->audit)
+			{
+				$model->setCreatedBy();
+				$model->setUpdatedBy();
+			}
+		});
+
+		static::updating(function($model)
+		{
+			if( ! $model->validate('update')) return false;
+
+			$model->purgeRedundant();
+			$model->autoHash();
+
+			if ($model->audit)
+			{
+				$model->setUpdatedBy();
+			}
+		});
 	}
 
 	/**
 	 * Validate all model data here
 	 * Based on the rules set in array $this->rules
 	 * 
+	 * @param  string  $type
 	 * @return boolean
 	 */
-	public function validate()
+	public function validate($type = 'create')
 	{
-		$check = $this->validator->make($this->attributes, static::$rules, static::$customMessages);
+		// If the validation type requested does not exists then we are ok
+		if ( ! isset($this->rules[$type])) return true;
+
+		$check = $this->validator->make($this->attributes, $this->rules[$type], $this->customMessages);
 		
 		if ($check->passes()) return true;
 		

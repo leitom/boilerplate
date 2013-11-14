@@ -12,9 +12,11 @@ class UserProfile extends Model {
 	
 	protected $audit = true;
 
-	public static $rules = array(
-		'firstname' => 'required',
-		'lastname' 	=> 'required'
+	protected $rules = array(
+		'create' => array(
+			'firstname' => 'required',
+			'lastname' 	=> 'required'
+		)
 	);
 
 	public function user()

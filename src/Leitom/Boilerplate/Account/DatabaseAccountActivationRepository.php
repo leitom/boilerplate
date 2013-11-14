@@ -93,7 +93,9 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	{
 		$activation = $this->getTable()->where('token', $token)->first();
 
-		return $activation and ! $this->accountExpired($activation);
+		if ($activation and ! $this->accountExpired($activation)) return $activation;
+		
+		return false;
 	}
 
 	/**

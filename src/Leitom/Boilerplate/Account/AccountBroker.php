@@ -113,7 +113,7 @@ class AccountBroker {
 	 * @param  Closure  $callback
 	 * @return mixed
 	 */
-	public function activate($token = '', Closure $callback)
+	public function activate($token = '')
 	{
 		// If the responses from the validate method is not a user instance, we will
 		// assume that it is a redirect and simply return it from this method and
@@ -121,16 +121,17 @@ class AccountBroker {
 		$user = $this->validateActivation($token);
 
 		// Set active flag on the user
-		$user = $this->users->update($user->id, array('active' => 1));
+		$updatedUser = $this->users->update($user->id, array('active' => 1));
 		
-		// Once we have called this callback, we will remove this token row from the
-		// table and return the response from this callback so the user gets sent
-		// to the destination given by the developers from the callback return.
-		$response = call_user_func($callback, $user);
+		// Dont delete the record before we activate the user incase of errors
+		if($updatedUser)
+		{
+			$this->accountActivationRepository->delete($token);
 
-		$this->accountActivationRepository->delete($token);
+			return $user;
+		}	
 
-		return $response;
+		return false;
 	}
 
 	/**
@@ -146,7 +147,7 @@ class AccountBroker {
 			return false;
 		}
 
-		return $this->getUser(array('email' => $activation->email));
+		return $this->getUser($activation->email);
 	}
 
 	/**
