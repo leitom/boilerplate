@@ -1,6 +1,6 @@
 <?php namespace Leitom\Boilerplate\Controllers;
 
-use View, Config, Input, Redirect;
+use View, Config, Input, Redirect, Account;
 use \Leitom\Boilerplate\Repositories\UsersRepositoryInterface;
 
 class AccountController extends BaseController {
@@ -33,19 +33,31 @@ class AccountController extends BaseController {
 
 		$user = $this->users->create($input);
 
-		if ( ! $user->hasValidatorErrors()) return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_created'));
+		if ( ! $user->hasValidatorErrors())
+		{
+			$path = strlen($this->routePrefix) > 0 ? "$this->routePrefix.account.update" : "account.update";
+
+			Account::sendActivation($user->email, $path);
+
+			return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_created'));
+		}
 
 		return Redirect::to("{$this->prefix}account/create")->withErrors($user->getValidatorErrors())->withInput();
 	}
 
 	/**
-	 * Store a resource in storage.
+	 * Edit resource
 	 *
 	 * @return Response
 	 */
-	public function update($id)
+	public function show($token)
 	{
-		//
+		Account::activate($token, function($user)
+		{
+			return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_activated'));
+		});
+		
+		return "Token not valid";
 	}
 
 }

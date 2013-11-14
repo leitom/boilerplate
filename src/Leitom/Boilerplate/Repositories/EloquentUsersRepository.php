@@ -15,6 +15,11 @@ class EloquentUsersRepository implements UsersRepositoryInterface {
 		return User::find($id);
 	}
 
+	public function getBy($key, $value)
+	{
+		return User::where($key, '=', $value)->first();
+	}
+
 	public function create(array $attributes = array())
 	{
 		$user = new User($attributes);

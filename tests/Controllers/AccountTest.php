@@ -2,13 +2,13 @@
 
 use Mockery as m;
 use Way\Tests\Factory;
-use \Config;
+use Config;
 
-class UsersTest extends TestCase {
+class AccountTest extends TestCase {
 
 	public function setUp()
 	{
-//		parent::setUp();
+		parent::setUp();
 
 		$this->prefix = Config::get('leitom.boilerplate::prefix');
 	}

@@ -56,7 +56,7 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	 * @param  \Illuminate\Auth\RemindableInterface  $user
 	 * @return string
 	 */
-	public function create(RemindableInterface $user)
+	public function create($user)
 	{
 		$email = $user->getReminderEmail();
 
@@ -89,13 +89,11 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	 * @param  string  $token
 	 * @return bool
 	 */
-	public function exists(RemindableInterface $user, $token)
+	public function exists($token)
 	{
-		$email = $user->getReminderEmail();
+		$activation = $this->getTable()->where('token', $token)->first();
 
-		$activation = $this->getTable()->where('email', $email)->where('token', $token)->first();
-
-		return $activation and ! $this->reminderExpired($activation);
+		return $activation and ! $this->accountExpired($activation);
 	}
 
 	/**
@@ -104,7 +102,7 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	 * @param  object  $activation
 	 * @return bool
 	 */
-	protected function reminderExpired($activation)
+	protected function accountExpired($activation)
 	{
 		$createdPlusHour = strtotime($activation->created_at) + $this->expires;
 
@@ -133,7 +131,7 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	}
 
 	/**
-	 * Delete expired reminders.
+	 * Delete expired account activations.
 	 *
 	 * @return void
 	 */
@@ -150,7 +148,7 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	 * @param  \Illuminate\Auth\RemindableInterface  $user
 	 * @return string
 	 */
-	public function createNewToken(RemindableInterface $user)
+	public function createNewToken($user)
 	{
 		$email = $user->getReminderEmail();
 

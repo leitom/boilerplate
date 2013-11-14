@@ -96,6 +96,40 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
+	| Account activation table
+	|--------------------------------------------------------------------------
+	|
+	| The table to use for account activation
+	|
+	*/	
+
+	'accountActivationTable' => 'useractivations',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Account activation expire
+	|--------------------------------------------------------------------------
+	|
+	| When a account activation should expire
+	| Default is prox. one month
+	|
+	*/	
+
+	'accountActivationExpire' => 2629743,
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Account activation email view
+	|--------------------------------------------------------------------------
+	|
+	| The view to use for parsing and sending an account activation email
+	|
+	*/	
+
+	'accountActivationEmailView' => 'leitom.boilerplate::account.emails.activation',
+
+	/*
+	|--------------------------------------------------------------------------
 	| User registration default roles
 	|--------------------------------------------------------------------------
 	|

@@ -10,7 +10,7 @@ class User extends Model implements UserInterface, RemindableInterface {
 
 	protected $hidden = array('password');
 
-	protected $fillable = array('username', 'email', 'email_confirmation', 'password', 'password_confirmation');
+	protected $fillable = array('username', 'email', 'email_confirmation', 'password', 'password_confirmation', 'active');
 
 	protected $audit = true;
 

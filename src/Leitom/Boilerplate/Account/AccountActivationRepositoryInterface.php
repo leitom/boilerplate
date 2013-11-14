@@ -8,7 +8,7 @@ interface AccountActivationRepositoryInterface {
 	 * @param  \Illuminate\Auth\RemindableInterface  $user
 	 * @return string
 	 */
-	public function create(RemindableInterface $user);
+	public function create($user);
 
 	/**
 	 * Determine if a activation record exists and is valid.
@@ -17,7 +17,7 @@ interface AccountActivationRepositoryInterface {
 	 * @param  string  $token
 	 * @return bool
 	 */
-	public function exists(RemindableInterface $user, $token);
+	public function exists($token);
 
 	/**
 	 * Delete a activation record by token.

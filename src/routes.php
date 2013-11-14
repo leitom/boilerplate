@@ -26,7 +26,7 @@ Route::group(array('prefix' => Config::get('leitom.boilerplate::prefix')), funct
 	Route::resource('sessions', 'Leitom\Boilerplate\Controllers\SessionsController', array('only' => array('create', 'store', 'destroy')));
 
 	// Create a new account
-	Route::resource('account', 'Leitom\Boilerplate\Controllers\AccountController', array('only' => array('create', 'store', 'update')));
+	Route::resource('account', 'Leitom\Boilerplate\Controllers\AccountController', array('only' => array('create', 'store', 'show')));
 
 	// All routes and actions secured by the auth filter
 	

@@ -5,7 +5,7 @@
 ### ps.: dont use this package yet, it's in development!
 
 # Installation notes
-- add Leitom\Boilerplate\Providers\BoilerplateServiceProvider to your provider array in config/app.php
+- add Leitom\Boilerplate\BoilerplateServiceProvider to your provider array in config/app.php
 - run php artisan migrate -package leitom/boilerplate
 - run php artisan db:seed -package leitom/boilerplate
 

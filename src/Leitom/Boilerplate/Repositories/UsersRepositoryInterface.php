@@ -8,6 +8,9 @@ interface UsersRepositoryInterface {
 	// Find one user
 	public function find($id);
 
+	// Find one user by key value
+	public function getBy($key, $value);
+
 	// Create user and return a new instance
 	public function create(array $attributes = array());
 
