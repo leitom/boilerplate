@@ -5,6 +5,8 @@ use \Leitom\Boilerplate\Repositories\UsersRepositoryInterface;
 
 class AccountController extends BaseController {
 
+	protected $layout = 'leitom.boilerplate::public_master';
+
 	protected $users;
 
 	public function __construct(UsersRepositoryInterface $users)
@@ -42,8 +44,8 @@ class AccountController extends BaseController {
 				$m->subject('User Account Activation on boilerplate.com');
 			});
 
-			// Redirect to another page that does just show information about activation, dont go to login...
-			return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_created'));
+			// Show the configured sent page.
+			$this->layout->content = View::make(Config::get('leitom.boilerplate::activationSentView', compact('user'));
 		}
 
 		return Redirect::to("{$this->prefix}account/create")->withErrors($user->getValidatorErrors())->withInput();
@@ -59,11 +61,9 @@ class AccountController extends BaseController {
 		$user = Account::activate($token);
 
 		if($user)
-		{
 			return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_activated'));
-		}
 		else
-			return "Token not valid";
+			$this->layout->content = View::make(Config::get('leitom.boilerplate::activationTokenInvalidView'));
 	}
 
 }

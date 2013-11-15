@@ -7,16 +7,16 @@ use Leitom\Boilerplate\Repositories\UsersRepositoryInterface;
 class AccountBroker {
 
 	/**
-	 * The password reminder repository.
+	 * The account activation repository.
 	 *
-	 * @var \Illuminate\Auth\Reminders\ReminderRepositoryInterface  $reminders
+	 * @var \Leitom\Boilerplate\Account\AccountActivationRepositoryInterface  $accountActivationRepository
 	 */
 	protected $accountActivationRepository;
 
 	/**
 	 * The user provider implementation.
 	 *
-	 * @var \Illuminate\Auth\UserProviderInterface
+	 * @var \Leitom\Boilerplate\Repositories\UsersRepositoryInterface
 	 */
 	protected $users;
 
@@ -28,7 +28,7 @@ class AccountBroker {
 	protected $mailer;
 
 	/**
-	 * The view of the password reminder e-mail.
+	 * The view of the account activation e-mail.
 	 *
 	 * @var string
 	 */
@@ -37,9 +37,8 @@ class AccountBroker {
 	/**
 	 * Create a new password broker instance.
 	 *
-	 * @param  \Illuminate\Auth\Reminders\ReminderRepositoryInterface  $reminders
+	 * @param  \Leitom\Boilerplate\Account\AccountActivationRepositoryInterface  $accountActivationRepository
 	 * @param  \Leitom\Boilerplate\Repositories\UsersRepositoryInterface  $users
-	 * @param  \Illuminate\Routing\Redirector  $redirect
 	 * @param  \Illuminate\Mail\Mailer  $mailer
 	 * @param  string  $reminderView
 	 * @return void
@@ -60,7 +59,7 @@ class AccountBroker {
 	 *
 	 * @param  string   $email
 	 * @param  Closure  $callback
-	 * @return \Illuminate\Http\RedirectResponse
+	 * @return Boolean
 	 */
 	public function sendActivation($email, $path, Closure $callback = null)
 	{
@@ -86,7 +85,7 @@ class AccountBroker {
 	/**
 	 * Send the account activation e-mail.
 	 *
-	 * @param  \Illuminate\Auth\Reminders\RemindableInterface  $user
+	 * @param  \Leitom\Boilerplate\Repositories\UsersRepositoryInterface  $user
 	 * @param  string   $token
 	 * @param  Closure  $callback
 	 * @return void
@@ -98,6 +97,7 @@ class AccountBroker {
 		// so that it may be displayed for an user to click for account activation.
 		$view = $this->accountActivationView;
 
+		// We need to que the emails!
 		return $this->mailer->send($view, compact('token', 'path', 'user'), function($m) use ($user, $callback)
 		{
 			$m->to($user->getReminderEmail());
@@ -138,7 +138,7 @@ class AccountBroker {
 	 * Validate an activation for the given credentials.
 	 *
 	 * @param  string  $token
-	 * @return \Illuminate\Auth\RemindableInterface
+	 * @return \Leitom\Boilerplate\Repositories\UsersRepositoryInterface
 	 */
 	protected function validateActivation($token)
 	{
@@ -154,7 +154,7 @@ class AccountBroker {
 	 * Get the user for the given email.
 	 *
 	 * @param  string  $email
-	 * @return \Illuminate\Auth\Reminders\RemindableInterface
+	 * @return \Leitom\Boilerplate\Repositories\UsersRepositoryInterface
 	 */
 	public function getUser($email)
 	{

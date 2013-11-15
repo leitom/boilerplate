@@ -92,7 +92,40 @@ return array(
 	|
 	*/	
 
-	'newAccountView' => 'leitom.boilerplate::create_account',
+	'newAccountView' => 'leitom.boilerplate::account.create',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Activation sent view
+	|--------------------------------------------------------------------------
+	|
+	| The view to show when an activation email is sent
+	|
+	*/	
+
+	'activationSentView' => 'leitom.boilerplate::account.sent',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Activation invalid view
+	|--------------------------------------------------------------------------
+	|
+	| The view to show when an token is invalid
+	|
+	*/	
+
+	'activationTokenInvalidView' => 'leitom.boilerplate::account.invalid_token',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Account activation email view
+	|--------------------------------------------------------------------------
+	|
+	| The view to use for parsing and sending an account activation email
+	|
+	*/	
+
+	'accountActivationEmailView' => 'leitom.boilerplate::account.emails.activation',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -117,17 +150,6 @@ return array(
 
 	'accountActivationExpire' => 2629743,
 	
-	/*
-	|--------------------------------------------------------------------------
-	| Account activation email view
-	|--------------------------------------------------------------------------
-	|
-	| The view to use for parsing and sending an account activation email
-	|
-	*/	
-
-	'accountActivationEmailView' => 'leitom.boilerplate::account.emails.activation',
-
 	/*
 	|--------------------------------------------------------------------------
 	| User registration default roles
