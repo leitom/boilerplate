@@ -45,3 +45,10 @@
 - BoilerplateURL::route return a route with prefix set in configuration example: BoilerplateURL::route('sessions.store') // outputs app.sessions.store by default
 - BoilerplateURL::routeTo return a route with prefix set in configuration as an url example: BoilerplateURL::routeTo('sessions.store') // outputs http://www.domain.com/app/sessions/store
 - BoilerplateURL::to return a url with prefix set in configuration example: BoilerplateURL::to('new-account') // outputs http://www.domain.com/app/new-account by default
+
+# User account and activation
+Boilerplate comes with a easy user account management system.
+All the defaults is configurable in the config file provided. And every aspect of the implementations can be overrided.
+The account part of the boilerplate provides a controller that utilizes the Account Facade.
+The facade works in the same way as the laravel Password facad (as it uses the same logic) it has two main functions to using for sending and validating tokens: 
+Account::sendActivation($user->email, $pathToRouteForUsingAccount::activate, "callback":function($m, $user)) and Account::activate($token)
