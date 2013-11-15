@@ -1,5 +1,7 @@
 <?php namespace Leitom\Boilerplate\Account;
 
+use Illuminate\Auth\Reminders\RemindableInterface;
+
 interface AccountActivationRepositoryInterface {
 
 	/**
@@ -8,7 +10,7 @@ interface AccountActivationRepositoryInterface {
 	 * @param  \Illuminate\Auth\RemindableInterface  $user
 	 * @return string
 	 */
-	public function create($user);
+	public function create(RemindableInterface $user);
 
 	/**
 	 * Determine if a activation record exists and is valid.

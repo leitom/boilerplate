@@ -1,6 +1,6 @@
 <?php
 
-class UrlHelperTest extends TestCase {
+class UrlHelperTest extends BoilerplateTestCase {
 	
 	public function setUp()
 	{

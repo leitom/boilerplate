@@ -39,16 +39,16 @@ class AccountController extends BaseController {
 		{
 			$path = strlen($this->routePrefix) > 0 ? "$this->routePrefix.account.show" : "account.show";
 
-			Account::sendActivation($user->email, $path, function($m, $user)
+			Account::sendActivation(array('email' => $user->email), $path, function($m, $user)
 			{
 				$m->subject('User Account Activation on boilerplate.com');
 			});
 
 			// Show the configured sent page.
-			$this->layout->content = View::make(Config::get('leitom.boilerplate::activationSentView', compact('user'));
+			$this->layout->content = View::make(Config::get('leitom.boilerplate::activationSentView'))->with('user', $user);
 		}
-
-		return Redirect::to("{$this->prefix}account/create")->withErrors($user->getValidatorErrors())->withInput();
+		else
+			return Redirect::to("{$this->prefix}account/create")->withErrors($user->getValidatorErrors())->withInput();
 	}
 
 	/**
@@ -58,12 +58,21 @@ class AccountController extends BaseController {
 	 */
 	public function show($token)
 	{
-		$user = Account::activate($token);
+		$response = Account::activate(array('token' => $token), function($user)
+		{
+			$user->active = 1;
+			$user->save();
 
-		if($user)
 			return Redirect::to("$this->prefix$this->loginAlias")->with('logoutMessage', trans('leitom.boilerplate::account.account_activated'));
-		else
+		});
+
+		if( !$response)
+		{
 			$this->layout->content = View::make(Config::get('leitom.boilerplate::activationTokenInvalidView'));
+		}
+		else
+			return $response;
+
 	}
 
 }

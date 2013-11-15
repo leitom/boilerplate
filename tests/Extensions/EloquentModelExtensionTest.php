@@ -10,14 +10,14 @@ class ExtensionTest extends Model {
 	
 	protected $table = 'test';
 	
-	protected static $rules = array(
+	protected $rules = array(
 		'testValue' => 'required',
 		'email'		=> 'required|email'
 	);
 
 }
 
-class EloquentModelExtensionTest extends TestCase {
+class EloquentModelExtensionTest extends BoilerplateTestCase {
 	use \Way\Tests\ModelHelpers;
 	
 	public function testThatValidationFails()

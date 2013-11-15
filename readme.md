@@ -50,5 +50,6 @@
 Boilerplate comes with a easy user account management system.
 All the defaults is configurable in the config file provided. And every aspect of the implementations can be overrided.
 The account part of the boilerplate provides a controller that utilizes the Account Facade.
-The facade works in the same way as the laravel Password facad (as it uses the same logic) it has two main functions to using for sending and validating tokens: 
-Account::sendActivation($user->email, $pathToRouteForUsingAccount::activate, "callback":function($m, $user)) and Account::activate($token)
+The facade works in the same way as the laravel Password facade (as it uses the same logic except the redirector part) it has two main functions to using for sending and validating tokens: 
+Account::sendActivation($user->email, $pathToRouteForUsingAccount::activate, "callback":function($m, $user)) 
+and Account::activate(array('token' => $token), "callback":function($user) this can be assigned to a variable and check if successed(ps. check the Account directory for more information)

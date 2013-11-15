@@ -1,6 +1,6 @@
 <?php
 
-class AssetHelperTest extends TestCase {
+class AssetHelperTest extends BoilerplateTestCase {
 
 	public function setUp()
 	{

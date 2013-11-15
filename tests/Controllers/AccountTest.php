@@ -2,9 +2,8 @@
 
 use Mockery as m;
 use Way\Tests\Factory;
-use Config;
 
-class AccountTest extends TestCase {
+class AccountTest extends BoilerplateTestCase {
 
 	public function setUp()
 	{

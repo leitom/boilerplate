@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Connection;
+use Illuminate\Auth\Reminders\RemindableInterface;
 
 class DatabaseAccountActivationRepository implements AccountActivationRepositoryInterface {
 
@@ -56,7 +57,7 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	 * @param  \Illuminate\Auth\RemindableInterface  $user
 	 * @return string
 	 */
-	public function create($user)
+	public function create(RemindableInterface $user)
 	{
 		$email = $user->getReminderEmail();
 
@@ -85,7 +86,6 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	/**
 	 * Determine if a activation record exists and is valid.
 	 *
-	 * @param  \Illuminate\Auth\RemindableInterface  $user
 	 * @param  string  $token
 	 * @return bool
 	 */
@@ -150,7 +150,7 @@ class DatabaseAccountActivationRepository implements AccountActivationRepository
 	 * @param  \Illuminate\Auth\RemindableInterface  $user
 	 * @return string
 	 */
-	public function createNewToken($user)
+	public function createNewToken(RemindableInterface $user)
 	{
 		$email = $user->getReminderEmail();
 

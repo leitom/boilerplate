@@ -1,6 +1,6 @@
 <?php
 
-class SessionsTest extends TestCase {
+class SessionsTest extends BoilerplateTestCase {
 
 	public function setUp()
 	{

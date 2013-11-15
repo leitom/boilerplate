@@ -43,6 +43,18 @@ class BoilerplateServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
+		$this->registerServiceProviders();
+
+		$this->registerCommands();
+	}
+
+	/**
+	 * Register all the service providers that boilerplate depend on
+	 *
+	 * @return void
+	 */
+	protected function registerServiceProviders()
+	{
 		// Extensions provider
 		$this->app->register('Leitom\Boilerplate\Extensions\ExtensionsServiceProvider');
 
@@ -60,13 +72,30 @@ class BoilerplateServiceProvider extends ServiceProvider {
 	}
 
 	/**
+	 * Register the main boilerplate related console commands.
+	 *
+	 * @return void
+	 */
+	protected function registerCommands()
+	{
+		$app = $this->app;
+
+		$app['command.leitom.boilerplate.install'] = $app->share(function($app)
+		{
+			return new Console\InstallBoilerplateCommand($app['files']);
+		});
+
+		$this->commands('command.leitom.boilerplate.install');
+	}
+
+	/**
 	 * Get the services provided by the provider.
 	 *
 	 * @return array
 	 */
 	public function provides()
 	{
-		return array();
+		return array('command.leitom.boilerplate');
 	}
 
 }

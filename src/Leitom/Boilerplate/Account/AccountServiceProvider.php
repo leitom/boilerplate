@@ -13,16 +13,6 @@ class AccountServiceProvider extends ServiceProvider {
 	protected $defer = false;
 
 	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		
-	}
-
-	/**
 	 * Register the service provider.
 	 *
 	 * @return void
@@ -34,6 +24,8 @@ class AccountServiceProvider extends ServiceProvider {
 		$this->registerAccountRepository();
 
 		$this->registerFacades();
+
+		$this->registerCommands();
 	}
 
 	/**
@@ -50,7 +42,8 @@ class AccountServiceProvider extends ServiceProvider {
 			// We will resolve an implementation here.
 			$accountActivationRepository = $app['account.repository'];
 
-			$users = $app['Leitom\Boilerplate\Repositories\UsersRepositoryInterface'];
+			//$users = $app['Leitom\Boilerplate\Repositories\UsersRepositoryInterface'];
+			$users = $app['auth']->driver()->getProvider();
 
 			$view = $app['config']->get('leitom.boilerplate::accountActivationEmailView');
 
@@ -91,6 +84,28 @@ class AccountServiceProvider extends ServiceProvider {
 	}
 
 	/**
+	 * Register the account related console commands.
+	 *
+	 * @return void
+	 */
+	protected function registerCommands()
+	{
+		$app = $this->app;
+
+		$app['command.leitom.boilerplate.account.make'] = $app->share(function($app)
+		{
+			return new Console\MakeActivationsCommand($app['files']);
+		});
+
+		$app['command.leitom.boilerplate.account.clear'] = $app->share(function($app)
+		{
+			return new Console\ClearExpiredActivationsCommand;
+		});
+
+		$this->commands('command.leitom.boilerplate.account.make', 'command.leitom.boilerplate.account.clear');
+	}
+
+	/**
 	 * Register facades
 	 *
 	 * @return void
@@ -115,7 +130,7 @@ class AccountServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('account.repository', 'account.broker');
+		return array('account.repository', 'account.broker', 'command.leitom.boilerplate.account');
 	}
 
 }
