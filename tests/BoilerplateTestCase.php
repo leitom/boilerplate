@@ -2,7 +2,7 @@
 
 use \Mockery as m;
 
-class BoilerplateTestCase extends Illuminate\Foundation\Testing\TestCase {
+abstract class BoilerplateTestCase extends Illuminate\Foundation\Testing\TestCase {
 
 	/**
 	 * Creates the application.

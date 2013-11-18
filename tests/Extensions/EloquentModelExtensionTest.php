@@ -11,8 +11,10 @@ class ExtensionTest extends Model {
 	protected $table = 'test';
 	
 	protected $rules = array(
-		'testValue' => 'required',
-		'email'		=> 'required|email'
+		'create' => array(
+			'testValue' => 'required',
+			'email'		=> 'required|email'
+		)
 	);
 
 }
@@ -28,7 +30,7 @@ class EloquentModelExtensionTest extends BoilerplateTestCase {
 		
         $validation = m::mock('Illuminate\Validation\Validator');
         $validation->shouldReceive('make')
-                   ->once()
+        		   ->once()
                    ->andReturn($response);
 		
 		$model = new ExtensionTest(array(), $validation);

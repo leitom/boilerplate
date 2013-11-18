@@ -62,13 +62,12 @@ class AccountBroker {
 	 * @param  Closure  $callback
 	 * @return Boolean
 	 */
-	public function sendActivation(array $credentials, $path, Closure $callback = null)
+	public function sendActivation(array $credentials, $path = 'app.account.show', Closure $callback = null)
 	{
 		// First we will check to see if we found a user at the given credentials and
 		$user = $this->getUser($credentials);
 
-		if (is_null($user))
-		{
+		if (is_null($user)) {
 			return false;
 		}
 
@@ -90,7 +89,7 @@ class AccountBroker {
 	 * @param  Closure  $callback
 	 * @return void
 	 */
-	protected function sendAccountActivation(RemindableInterface $user, $path, $token, Closure $callback = null)
+	protected function sendAccountActivation(RemindableInterface $user, $path = 'app.account.show', $token, Closure $callback = null)
 	{
 		// We will use the account activation view that was given to the broker to display the
 		// account activation e-mail. We'll pass a "token" variable into the views
@@ -120,8 +119,7 @@ class AccountBroker {
 		// the user is properly redirected having an error message on the post.
 		$user = $this->validateActivation($credentials['token']);
 
-		if ( ! $user instanceof RemindableInterface)
-		{
+		if ( ! $user instanceof RemindableInterface) {
 			return $user;
 		}
 
@@ -145,8 +143,7 @@ class AccountBroker {
 	{
 		$activation = $this->accountActivationRepository->exists($token);
 
-		if ( ! $activation)
-		{
+		if ( ! $activation) {
 			return false;
 		}
 
@@ -163,8 +160,7 @@ class AccountBroker {
 	{
 		$user = $this->users->retrieveByCredentials($credentials);
 
-		if ($user and ! $user instanceof RemindableInterface)
-		{
+		if ($user and ! $user instanceof RemindableInterface) {
 			throw new \UnexpectedValueException("User must implement Remindable interface.");
 		}
 

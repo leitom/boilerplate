@@ -21,7 +21,7 @@
         "classmap": [
     	    "src/controllers",
     	    "src/migrations",
-            "../../../app/tests/TestCase.php"
+            "tests"
         ],
         "psr-0": {
             "Leitom\\Boilerplate\\": "src/"
