@@ -6,7 +6,7 @@ interface UsersRepositoryInterface {
 	public function all();
 
 	// Find one user
-	public function find($id);
+	public function findById($id);
 
 	// Find one user by key value
 	public function getBy($key, $value);

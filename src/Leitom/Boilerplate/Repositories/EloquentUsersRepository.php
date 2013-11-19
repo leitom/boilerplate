@@ -10,7 +10,7 @@ class EloquentUsersRepository implements UsersRepositoryInterface {
 		return User::all();
 	}
 
-	public function find($id)
+	public function findById($id)
 	{
 		return User::find($id);
 	}
@@ -36,14 +36,14 @@ class EloquentUsersRepository implements UsersRepositoryInterface {
 
 	public function update($id, array $attributes = array())
 	{
-		$user = $this->find($id);
+		$user = $this->findById($id);
 		$user->fill($attributes);
 		return $user->save();
 	}
 
 	public function delete($id)
 	{
-		$user = $this->find($id);
+		$user = $this->findById($id);
 		return $user->delete();
 	}
 
