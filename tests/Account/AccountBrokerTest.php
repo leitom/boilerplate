@@ -48,12 +48,28 @@ class AccountBrokerTest extends PHPUnit_Framework_TestCase {
 
 		$callback = function($m, $user) {};
 
-		$mocks['mailer']->shouldReceive('send')->once()->with('view', array('token' => 'token', 'path' => 'path', 'user' => $user), m::type('Closure'))->andReturnUsing(function($m, $user, $callback)
+		$mocks['mailer']->shouldReceive('send')->once()->withAnyArgs()->andReturnUsing(function($m, $user, $callback)
 		{
 			return $callback;
 		});
 
 		$this->assertTrue($broker->sendActivation(array('foo'), 'path', $callback));
+	}
+
+	public function testActivate()
+	{
+		$broker = $this->getBroker($mocks = $this->getMocks());
+
+		$mocks['users']->shouldReceive('retrieveByCredentials')->once()->withAnyArgs()->andReturn($user = m::mock('Illuminate\Auth\Reminders\RemindableInterface'));
+		
+		$tokenRowReturn = m::mock('stdClass');
+		$tokenRowReturn->email ='foo';
+		$mocks['accountActivation']->shouldReceive('exists')->once()->with('token')->andReturn($tokenRowReturn);
+		$mocks['accountActivation']->shouldReceive('delete')->once()->with('token');
+
+		$callback = function($user) {};
+
+		$broker->activate(array('token' => 'token'), $callback);
 	}
 
 	protected function getBroker($mocks)
