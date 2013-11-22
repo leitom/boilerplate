@@ -35,7 +35,11 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('app/login');
+	$prefix = Config::get('leitom.boilerplate::prefix');
+	$login = Config::get('leitom.boilerplate::loginAlias');
+	$to = strlen($prefix) > 0 ? "$prefix/$login" : $login;
+	
+	if (Auth::guest()) return Redirect::guest($to)->with('logoutMessage', trans('leitom.boilerplate::sessions.login_to_visit_page'));
 });
 
 

@@ -4,8 +4,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Connection;
 use Illuminate\Auth\Reminders\RemindableInterface;
 
-class DatabaseAccountActivationRepository implements AccountActivationRepositoryInterface {
-
+class DatabaseAccountActivationRepository implements AccountActivationRepositoryInterface
+{
 	/**
 	 * The database connection instance.
 	 *

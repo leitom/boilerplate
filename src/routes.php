@@ -34,7 +34,19 @@ Route::group(array('prefix' => Config::get('leitom.boilerplate::prefix')), funct
 	{
 		Route::get('dashboard', function()
 		{
-			return "Welcome to the dashboard!";
+			$routes = Route::getRoutes();
+			$results = array();
+			foreach ($routes as $name => $route) {
+				$action = $route->getAction() ?: 'Closure';
+				$results[] = array(
+					'host'   => $route->getHost(),
+					'method' => head($route->getMethods()),
+					'uri'    => $route->getPath(),
+					'name'   => str_contains($name, ' ') ? '' : $name,
+					'action' => $action
+				);
+			}
+			var_dump(array_filter($results)); exit;
 		});
 	});
 });

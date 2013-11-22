@@ -6,8 +6,8 @@ use Illuminate\Support\MessageBag;
 use \Leitom\Boilerplate\Extensions\ValidatorInterface;
 use Auth, Str, Hash;
 
-abstract class Model extends Eloquent implements ValidatorInterface {
-	
+abstract class Model extends Eloquent implements ValidatorInterface
+{	
 	/**
      * Validator instance
      * 
@@ -83,8 +83,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 			$model->purgeRedundant();
 			$model->autoHash();
 
-			if ($model->audit)
-			{
+			if ($model->audit) {
 				$model->setCreatedBy();
 				$model->setUpdatedBy();
 			}
@@ -97,8 +96,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 			$model->purgeRedundant();
 			$model->autoHash();
 
-			if ($model->audit)
-			{
+			if ($model->audit) {
 				$model->setUpdatedBy();
 			}
 		});
@@ -157,8 +155,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	{
 		$clean = array();
 
-		foreach ($this->attributes as $key => $value)
-		{
+		foreach ($this->attributes as $key => $value) {
 			if ( ! Str::endsWith($key, '_confirmation')) $clean[$key] = $value;
 		}
 	  
@@ -173,10 +170,8 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	private function autoHash()
 	{
-		if (isset($this->attributes['password']))
-	  	{
-	    	if ($this->attributes['password'] != $this->getOriginal('password'))
-	    	{
+		if (isset($this->attributes['password'])) {
+	    	if ($this->attributes['password'] != $this->getOriginal('password')) {
 	      		$this->attributes['password'] = Hash::make($this->attributes['password']);
 	    	}
 	  	}
@@ -201,8 +196,7 @@ abstract class Model extends Eloquent implements ValidatorInterface {
 	 */
 	protected function setUpdatedBy()
 	{
-		if (Auth::check())
-		{
+		if (Auth::check()) {
 			if (Auth::User()->id != $this->getOriginal('updated_by')) $this->attributes['updated_by'] = Auth::User()->id;
 		}
 	}

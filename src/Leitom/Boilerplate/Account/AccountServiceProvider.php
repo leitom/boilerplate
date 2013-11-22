@@ -3,8 +3,8 @@
 use View, Config;
 use Illuminate\Support\ServiceProvider;
 
-class AccountServiceProvider extends ServiceProvider {
-
+class AccountServiceProvider extends ServiceProvider
+{
 	/**
 	 * Indicates if loading of the provider is deferred.
 	 *

@@ -20,6 +20,7 @@ return array(
 
 	// Messages
 	'wrong_username_or_password' => 'Wrong username or password',
-	'logged_out'				 => 'Your logged out'
+	'logged_out'				 => 'Your logged out',
+	'login_to_visit_page'		 => 'Please login to visit the page'
 
 );
